@@ -1,28 +1,6 @@
-[gd_scene load_steps=22 format=4 uid="uid://cj5l8udq1yj8b"]
+[gd_scene load_steps=19 format=4 uid="uid://cj5l8udq1yj8b"]
 
 [ext_resource type="Script" path="res://character_body_3d.gd" id="1_8gugh"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h0wwi"]
-sky_top_color = Color(0.0900279, 0.0383057, 0.0219266, 1)
-sky_horizon_color = Color(0.0670921, 0.0237919, 0.0148726, 1)
-ground_bottom_color = Color(0, 0, 0, 1)
-ground_horizon_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Sky" id="Sky_iu2a7"]
-sky_material = SubResource("ProceduralSkyMaterial_h0wwi")
-
-[sub_resource type="Environment" id="Environment_sa1bd"]
-background_mode = 2
-sky = SubResource("Sky_iu2a7")
-tonemap_mode = 3
-sdfgi_enabled = true
-volumetric_fog_enabled = true
-volumetric_fog_albedo = Color(0.614646, 0.726483, 0.896936, 1)
-volumetric_fog_emission = Color(0.324129, 0.116372, 0.116248, 1)
-volumetric_fog_emission_energy = 0.1
-volumetric_fog_length = 128.0
-adjustment_enabled = true
-adjustment_brightness = 1.3
 
 [sub_resource type="BoxMesh" id="BoxMesh_fpsnp"]
 size = Vector3(1, 2, 1)
@@ -150,32 +128,30 @@ shadow_mesh = SubResource("ArrayMesh_ehjfy")
 
 [node name="World" type="Node3D"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_sa1bd")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+visible = false
 shadow_enabled = true
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[node name="MainCharacter" type="CharacterBody3D" parent="."]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 1, 16.952)
 script = ExtResource("1_8gugh")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MainCharacter"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("BoxMesh_fpsnp")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MainCharacter"]
 transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_xewni")
 
-[node name="Head" type="Node3D" parent="CharacterBody3D"]
+[node name="Head" type="Node3D" parent="MainCharacter"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Head"]
+[node name="Camera3D" type="Camera3D" parent="MainCharacter/Head"]
 transform = Transform3D(1.42857, 0, 0, 0, 1.42857, 0, 0, 0, 1.42857, 0, 0, -22.3345)
 
-[node name="SpotLight3D" type="SpotLight3D" parent="CharacterBody3D/Head/Camera3D"]
+[node name="SpotLight3D" type="SpotLight3D" parent="MainCharacter/Head/Camera3D"]
 light_color = Color(0.97917, 0.94481, 0.797388, 1)
 light_energy = 2.47
 light_volumetric_fog_energy = 0.1
